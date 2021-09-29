@@ -24,12 +24,23 @@ exports.agregarVacante= async(req,res)=>{
 }
 
 exports.mostrarVacante= async(req,res,next)=>{
-    vacante=await Vacante.findOne({url:req.params.url}).lean()
+    const vacante=await Vacante.findOne({url:req.params.url}).lean()
     console.log(vacante)
     if(!vacante)return next()
     res.render('vacante',{
         vacante,
         nombrePagina : vacante.titulo,
         barra:true
+    })
+}
+
+exports.formEditarVacante= async(req,res,next)=>{
+    const vacante=await Vacante.findOne({url:req.params.url}).lean()
+    console.log(vacante)
+    if(!vacante)return next()
+    res.render('editar-vacante',{
+        vacante,
+        nombrePagina : `Editar - ${vacante.titulo}`,
+        
     })
 }
