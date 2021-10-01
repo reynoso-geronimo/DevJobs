@@ -9,11 +9,15 @@ const cookieParser= require ('cookie-parser')
 const session=  require('express-session')
 const MongoStore = require ('connect-mongo')
 require('dotenv').config({path:'variables.env'})
-const bodyParser= require('body-parser')
+const flash = require ('connect-flash')
 
 const app = express();
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
+
+
+
 
 console.log(`iniciando...`)
 //habilitar handlebars como view
@@ -40,7 +44,18 @@ app.use(session({
     })
 }))
 
+//alertas y flash messages
+
+app.use(flash())
+
+//crear nuestro middleware
+app.use((req,res,next)=>{
+    res.locals.mensajes =  req.flash()
+    next()
+})
+
 app.use('/',router())
+
 
 app.listen(process.env.PUERTO)
 

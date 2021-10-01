@@ -9,3 +9,4 @@ mongoose.connection.on('error',(errror)=>{
 })
 
 require('../models/vacantes')
+require('../models/usuarios')
