@@ -3,6 +3,7 @@ mongoose.Promise= global.Promise;
 const slug= require('slug')
 const shortid= require('shortid')
 
+
 const vacantesSchema= new mongoose.Schema({
     titulo:{
         type:String,
@@ -45,7 +46,12 @@ const vacantesSchema= new mongoose.Schema({
         nombre: String,
         email: String,
         cv: String
-    }]
+    }],
+    autor:{
+        type: mongoose.Schema.ObjectId,
+        ref:'Usuario',
+        required:'El autor es Obligatorio'
+    }
 });
 vacantesSchema.pre('save', function(next){
     //crear la url
