@@ -10,6 +10,7 @@ const session=  require('express-session')
 const MongoStore = require ('connect-mongo')
 require('dotenv').config({path:'variables.env'})
 const flash = require ('connect-flash')
+const passport= require('./config/passport')
 
 const app = express();
 app.use(express.json())
@@ -43,6 +44,9 @@ app.use(session({
         mongoUrl:process.env.DATABASE
     })
 }))
+//inicializar passport 
+app.use(passport.initialize())
+app.use(passport.session())
 
 //alertas y flash messages
 
