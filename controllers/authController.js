@@ -35,3 +35,8 @@ exports.mostrarPanel=async (req,res,next)=>{
         nombre:req.user.nombre
     })
 }
+exports.cerrarSesion=(req,res)=>{
+    req.logout();
+    req.flash('correcto', 'Cerraste Sesion Correctamente')
+    return res.redirect('/iniciar-sesion')
+}
