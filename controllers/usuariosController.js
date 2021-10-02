@@ -63,7 +63,9 @@ exports.formIniciarSesion=(req,res,next)=>{
 exports.formEditarPerfil=(req,res)=>{
     res.render('editar-perfil',{
         nombrePagina:'Edita tu Perfil en devJobs',
-        usuario: req.user.toObject()
+        usuario: req.user.toObject(),
+        cerrarSesion:true,
+        nombre:req.user.nombre
     })
 }
 //guardar cambios en el perfil
