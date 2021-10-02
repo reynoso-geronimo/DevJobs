@@ -405,6 +405,7 @@ p.candidatos {
     width: 120px;
     align-self: flex-start;
     margin-right: 1rem;
+    border-radius: 10%;
 }
 .cerrar-sesion p, 
 .cerrar-sesion a {

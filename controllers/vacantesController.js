@@ -7,7 +7,8 @@ exports.formularioNuevaVacante=(req,res)=>{
         nombrePagina: 'Nueva Vacante',
         tagline: 'LLena el formulario y publica tu vacante',
         cerrarSesion:true,
-        nombre:req.user.nombre
+        nombre:req.user.nombre,
+        imagen:req.user.imagen
     })
 
 }
@@ -28,7 +29,7 @@ exports.agregarVacante= async(req,res)=>{
 }
 
 exports.mostrarVacante= async(req,res,next)=>{
-    const vacante=await Vacante.findOne({url:req.params.url}).lean()
+    const vacante=await Vacante.findOne({url:req.params.url}).populate('autor').lean()
     console.log(vacante)
     if(!vacante)return next()
     res.render('vacante',{
@@ -46,7 +47,8 @@ exports.formEditarVacante= async(req,res,next)=>{
         vacante,
         nombrePagina : `Editar - ${vacante.titulo}`,
         cerrarSesion:true,
-        nombre:req.user.nombre
+        nombre:req.user.nombre,
+        imagen:req.user.imagen
         
     })
 }
@@ -90,4 +92,23 @@ exports.validarVacante=async(req,res,next)=>{
  
     //si toda la validacion es correcta
     next();
+}
+exports.eliminarVacante=async(req,res,next)=>{
+    const {id} = req.params
+    
+    const vacante = await Vacante.findById(id)
+  
+    if(verificarAutor(vacante, req.user)){
+        vacante.remove();
+        res.status(200).send('Vacante Eliminada')
+    }else{
+        res.status(403).send('Error')
+    }
+
+}
+const verificarAutor= (vacante={}, usuario={})=>{
+    if(!vacante.autor.equals(usuario._id)){
+        return false
+    }
+    return true;
 }

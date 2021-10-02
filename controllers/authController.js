@@ -32,7 +32,8 @@ exports.mostrarPanel=async (req,res,next)=>{
         tagline:'Crea y administra tus vacantes desde aqui',
         vacantes,
         cerrarSesion:true,
-        nombre:req.user.nombre
+        nombre:req.user.nombre,
+        imagen: req.user.imagen
     })
 }
 exports.cerrarSesion=(req,res)=>{
