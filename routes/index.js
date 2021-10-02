@@ -35,7 +35,7 @@ module.exports = () => {
   
   //editar perfil
   router.get("/editar-perfil",authController.verificarUsuario, usuariosController.formEditarPerfil);
-  router.post("/editar-perfil", authController.verificarUsuario, usuariosController.editarPerfil)
+  router.post("/editar-perfil", authController.verificarUsuario, usuariosController.validarPerfil ,usuariosController.editarPerfil)
 
   return router;
 };

@@ -68,7 +68,7 @@ exports.validarVacante=async(req,res,next)=>{
     rules=[
     body('titulo').not().isEmpty().withMessage('El nombre es obligatorio').escape(),
     body('empresa').not().isEmpty().withMessage('la Empresa es obligatoria').escape(),
-    body('ubicacion').not().isEmpty().withMessage('La Ubicacion es obligatorio').escape(),
+    body('ubicacion').not().isEmpty().withMessage('La Ubicacion es obligatoria').escape(),
     body('contrato').not().isEmpty().withMessage('El Contrato es obligatorio').escape(),
     body('skills').not().isEmpty().withMessage('Agrega al menos una habilidad').escape(),
     body('salario').escape(),
