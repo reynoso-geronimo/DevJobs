@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 console.log(`iniciando...`)
-//habilitar handlebars como view
+//habilitar handlebars como view engine
 app.engine('handlebars',
 exphbs({
     defaultLayout:'layout',
