@@ -4,7 +4,7 @@ require('dotenv').config({path:'variables.env'})
 mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true
 })
-mongoose.connection.on('error',(errror)=>{
+mongoose.connection.on('error',(error)=>{
     console.log(error)
 })
 

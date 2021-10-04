@@ -34,6 +34,11 @@ module.exports = () => {
   //cerrar sesion
   router.get('/cerrar-sesion',authController.verificarUsuario, authController.cerrarSesion)
 
+
+  router.get('/reestablecer-password', authController.formReestablecerPassword)
+
+  router.post('/reestablecer-password', authController.enviarToken)
+
   //panel de administracinh
   router.get("/administracion", authController.verificarUsuario, authController.mostrarPanel);
   
@@ -41,9 +46,17 @@ module.exports = () => {
   router.get("/editar-perfil",authController.verificarUsuario, usuariosController.formEditarPerfil);
   router.post("/editar-perfil",
    authController.verificarUsuario,
-   //usuariosController.validarPerfil,
+   usuariosController.validarPerfil,
    usuariosController.subirImagen,
    usuariosController.editarPerfil)
+
+   //recibidr mensajes de candidatos
+   router.post('/vacantes/:url',vacantesController.subirCV, vacantesController.contactar 
+     )
+  
+    router.get("/candidatos/:id", authController.verificarUsuario, vacantesController.mostrarCandidatos)
+
+
 
   return router;
 };

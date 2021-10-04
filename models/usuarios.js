@@ -37,7 +37,7 @@ usuariosSchema.pre('save', async function(next){
     next()
 });
 usuariosSchema.post('save',function(error,doc,next){
-    console.log('elo')
+
     if(error.name==='MongoServerError' &&error.code === 11000){
        
         next('Ese correo ya esta registrado')
