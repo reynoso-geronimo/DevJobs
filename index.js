@@ -73,7 +73,12 @@ app.use( (error,req, res,/*!!!!*/next/*!!!*/) => {
     res.status(status);
     res.render('error');
  });
+ //dejar que herokku asigne el puerto
 
-app.listen(process.env.PUERTO)
+const host = '0.0.0.0';
+const port =  process.env.PORT || 5000
+app.listen(port,host, ()=>{
+    console.log(`iniciando`)
+})
 
-console.log(`Funcionando en port ${process.env.PUERTO}`)
+console.log(`Funcionando en port ${port}`)
