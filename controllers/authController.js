@@ -3,6 +3,7 @@ const mongoose=require('mongoose')
 const Vacante = mongoose.model('Vacante')
 const Usuario =  mongoose.model('Usuario')
 const crypto = require('crypto')
+const enviarEmail=  require('../handlers/email')
 
 exports.autenticarUsuario =  passport.authenticate('local',{
     successRedirect:'/administracion',
@@ -51,7 +52,6 @@ exports.formReestablecerPassword=(req,res)=>{
 }
 
 exports.enviarToken=async(req,res)=>{
-    console.log(req.body)
     const usuario= await Usuario.findOne({email:req.body.email})
     if(!usuario){
         req.flash('error','Usuario no Encontrado')
@@ -65,8 +65,54 @@ exports.enviarToken=async(req,res)=>{
 
     console.log(resetUrl)
 
-    // TODO : enviar notificacion por email
+    // enviar notificacion por email
 
+    await enviarEmail.enviar({
+        usuario,
+        subject: 'Password Reset',
+        resetUrl,
+        archivo: 'reset'
+    })
+
+    //correcto
     req.flash('correcto','revisa tu email para las indicaciones')
     res.redirect('/iniciar-sesion')
+}
+//valida si el token es valido y el usuario existe
+
+exports.reestablecerPassword=async(req,res)=>{
+   
+    const usuario = await Usuario.findOne({
+        token:req.params.token,
+        expira:{
+            $gt : Date.now()
+        }
+    })
+    if(!usuario){
+        req.flash('error', 'El formulario ya no es valido intenta de nuevo')
+        return res.redirect('/reestablecer-password');
+    }
+    //correcto, mostrar el formulario
+    res.render('nuevo-password',{
+        nombrePagina:'nuevo password',
+    })
+}
+exports.guardarPassword=async(req,res)=>{
+    const usuario = await Usuario.findOne({
+        token:req.params.token,
+        expira:{
+            $gt : Date.now()
+        }
+    })
+    if(!usuario){
+        req.flash('error', 'El formulario ya no es valido intenta de nuevo')
+        return res.redirect('/reestablecer-password');
+    }
+    usuario.password = req.body.password;
+    usuario.token= undefined;
+    usuario.expira= undefined;
+
+    await usuario.save()
+        req.flash('correcto','Password modificado correctamente')
+        return res.redirect('/iniciar-sesion')
 }
