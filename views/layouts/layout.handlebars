@@ -18,9 +18,10 @@
         </h1>
         {{#if barra}}
             <div class="buscador">
-                <form action="#">
+                <form action="/buscador" method="POST">
                     <input type="text"
                             class="buscar"
+                            name="q"
                     >
                     <input type="submit"
                             value='buscar'

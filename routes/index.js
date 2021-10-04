@@ -60,6 +60,9 @@ module.exports = () => {
     router.get("/candidatos/:id", authController.verificarUsuario, vacantesController.mostrarCandidatos)
 
 
+    //buscador de vacantes
+
+    router.post('/buscador', vacantesController.buscarBacantes)
 
   return router;
 };
